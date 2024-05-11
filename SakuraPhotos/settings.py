@@ -26,6 +26,20 @@ SECRET_KEY = 'django-insecure-cqq-$n%p#ai*a!^11g$$n4rqvqgamr$2iza@)59mwbigt+0^_3
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# settings.py
+
+# 邮件发送后端
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# SMTP 服务器地址
+EMAIL_HOST = 'smtp.qq.com'
+# SMTP 服务器端口
+EMAIL_PORT = 587
+# SMTP 服务器的用户名
+EMAIL_HOST_USER = '3139282206@qq.com'
+# SMTP 服务器的密码或授权码
+EMAIL_HOST_PASSWORD = 'juthihtmzmqrdecj'
+# 是否使用 TLS 加密连接
+EMAIL_USE_TLS = True
 
 import sys, os
 sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
@@ -72,7 +86,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'SakuraPhotos.wsgi.application'
 
-
+ACCOUNT_ACTIVATION_DAYS = 1
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

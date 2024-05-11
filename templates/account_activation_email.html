@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Activation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 24px;
+            margin: 0;
+        }
+        .content {
+            text-align: center;
+        }
+        .content p {
+            color: #666;
+            font-size: 16px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .pattern {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="%23f4f4f4" d="M0 40L40 0H0z"/></svg>');
+            background-repeat: repeat;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .colorful {
+            color: #ff6600;
+        }
+        .button {
+            background-color: #ff6600;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #e65c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sakura Photo!</h1>
+        </div>
+        <div class="content">
+            <p>你好！ {{ user.username }},</p>
+            <p>感谢您的注册,请点击以下链接激活您的邮件并绑定账号:</p>
+            <p><a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="button">Activate Your Account</a></p>
+            <p>激活后，您便可以正常进行软件登录使用</p>
+        </div>
+        <div class="footer">
+            <p>如果您并未进行邮箱注册，请忽略这份邮件</p>
+            <p>Best regards,<br>Sakura Team</p>
+        </div>
+        <div class="pattern"></div>
+    </div>
+</body>
+</html>
