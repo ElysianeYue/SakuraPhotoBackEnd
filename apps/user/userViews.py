@@ -36,11 +36,13 @@ from django.conf import settings
 
 from ..paper.serializers import *
 class RegisterView(APIView):
-    permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = RegisterSerializer(data=request.data, context={'request': request})
+        e_mail = PaperUser.objects.filter(email=request.data.get('email'))
+        if e_mail.exists():
+            return JsonResponse({'message':"邮箱已被注册"})
         if serializer.is_valid():
             user = serializer.save()
             if user:
@@ -73,15 +75,15 @@ class LoginView(APIView):
 
     def post(self, request, *args, **kwargs):
 
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
-        user = PaperUser.objects.filter(username=username).first()
+        user = PaperUser.objects.filter(email=email).first()
         if user is not None:
             if user.is_active:
                     # 用户验证成功，可以生成令牌
                 token = user.generate_custom_auth_token()
                 serializer = UserSerializer(user)
-                return Response({'data':serializer.data,'token': token}, status=status.HTTP_200_OK)
+                return JsonResponse({'data':serializer.data,'token': token}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'User account is disabled.'}, status=status.HTTP_400_BAD_REQUEST)
         else:

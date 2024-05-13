@@ -120,17 +120,27 @@ class DeleteSortInfo(APIView):
         #返回成功响应
         return Response({'message': 'Sort删除成功'}, status=status.HTTP_200_OK)
 
+
 class GetImagesView(APIView):
     def post(self, request):
+        # 获取所有图片，并按照id降序排序
         images = Image.objects.all().order_by('-id')
-        random_images = random.sample(list(images), min(40, len(images)))
-        image_list = ImageSerializer(random_images, many=True).data
-        return Response(image_list)
 
+        # 选择最新的30张图片
+        latest_images = images[:30]
+
+        # 序列化图片数据
+        image_list = ImageSerializer(latest_images, many=True).data
+
+        # 返回响应
+        return Response(image_list, status=status.HTTP_200_OK)
 class SearchingPaperView(APIView):
     def post(self, request):
         requestData = request.data
-        keyword = requestData.get('keyword', '原神').lower()
-        images = Image.objects.filter(img_name=keyword).order_by('-id')[:40]
+        keyword = requestData.get('keyword', '原神')  # 如果没有提供keyword，默认为'原神'
+        images = Image.objects.filter(img_name__icontains=keyword).order_by('-id')[:40]  # 使用icontains来匹配包含关键词的名称
         image_list = ImageSerializer(images, many=True).data
-        return Response(image_list)
+        if image_list != 0:
+            return Response(image_list)
+        else:
+            return Response('Not find photos')

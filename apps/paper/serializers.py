@@ -2,10 +2,12 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 
 from django.template.loader import render_to_string
+from requests import Response
 
 from rest_framework import serializers
 from .models import *
 from rest_framework_simplejwt.tokens import RefreshToken
+
 class ImageSerializer(serializers.ModelSerializer):
     img_url = serializers.SerializerMethodField()
 
@@ -83,11 +85,10 @@ from django.utils.http import  urlsafe_base64_encode
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(min_length=6, write_only=True)
-    confirm_password = serializers.CharField(min_length=6, write_only=True)
 
     class Meta:
         model = PaperUser
-        fields = ['email', 'password', 'confirm_password','username']
+        fields = ['email', 'password','username']
 
 
 
@@ -99,6 +100,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username']
         )
         user.is_active = False
+
         user.save()
 
         # 生成激活令牌

@@ -39,9 +39,9 @@ urlpatterns = [
     # 获取热门图片
     path('api/paper/get_hots', paperViews.GetHotsView.as_view(), name='get_hots'),
     # 新建类型分类
-    path('api/paper/up_sortInfo', paperViews.GetHotsView.as_view(), name='up_softInfo'),
+    path('api/paper/up_sortInfo', paperViews.GetSortInfoView.as_view(), name='up_softInfo'),
     # 获取分类信息
-    path('api/paper/get_sortInfo', paperViews.GetSortInfoView.as_view(), name='get_softInfo'),
+    path('api/paper/get_sortInfo', paperViews.GetSortInfoListView.as_view(), name='get_softInfo'),
     # 删除分类信息
     path('api/paper/delete_sortInfo', paperViews.DeleteSortInfo.as_view(), name='delete_softInfo'),
     #图片搜索
